@@ -58,6 +58,17 @@ contract AuraSoulsV1 is ReentrancyGuard, Ownable {
         lpBucketFeePercent = _feePercent;
     }
 
+    function setProtocolFeeDestination(address _feeDestination) public onlyOwner {
+        protocolFeeDestination = _feeDestination;
+    }
+
+    function setLpBucketFeeDestination(address _feeDestination) public onlyOwner {
+        lpBucketFeeDestination = _feeDestination;
+    }
+
+
+
+
     function cumulativeSum(uint256 n) internal pure returns (uint256) {
         return (n * (n + 1) * (2 * n + 1)) / 6;
     }
@@ -114,6 +125,9 @@ contract AuraSoulsV1 is ReentrancyGuard, Ownable {
         payable
         nonReentrant
     {
+        uint256 supply = soulsSupply[soulsSubject];
+        require(supply > 0 || soulsSubject == msg.sender, "Only the souls' subject can buy the first soul");
+
         uint256 price = getPrice(soulsSupply[soulsSubject], amount);
         uint256 totalPrice = applyFees(price, true);
         require(msg.value == totalPrice, "Incorrect payment amount");
@@ -148,6 +162,9 @@ contract AuraSoulsV1 is ReentrancyGuard, Ownable {
         public
         nonReentrant
     {
+        uint256 supply = soulsSupply[soulsSubject];
+        require(supply > amount, "Cannot sell the last soul");
+
         uint256 price = getPrice(soulsSupply[soulsSubject] - amount, amount);
         uint256 totalPayout = applyFees(price, false);
 
