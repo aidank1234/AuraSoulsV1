@@ -1,0 +1,41 @@
+# AuraSoulsV1 - Dependencies
+cache/
+out/
+crytic-export/
+broadcast/
+cache_forge/
+out_forge/
+
+# Echidna artifacts
+echidna-corpus/*.txt
+echidna-corpus/coverage/
+.echidna/
+
+# Core dumps
+core
+core.*
+*.core
+
+# lib/ directories (installed via forge install)
+lib/forge-std/
+lib/openzeppelin-contracts/
+lib/solmate/
+lib/solady/
+lib/ds-test/
+
+# Keep lib/fuzzlib/ (custom implementation)
+# !lib/fuzzlib/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
